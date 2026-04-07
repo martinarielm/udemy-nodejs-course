@@ -1,4 +1,6 @@
 import express from "express";
+import logger from "./logger.js";
+import authorize from "./authorize.js";
 
 // import path, { dirname } from "node:path";
 // import { fileURLToPath } from "node:url";
@@ -8,19 +10,19 @@ import express from "express";
 const app = express();
 const PORT = 5000;
 
-const logger = (req, res, next) => {
-  const { method, url } = req;
-  const time = new Date().toLocaleTimeString();
+app.use([logger, authorize]);
 
-  console.log("👨‍🎤 -> url:", url);
-  console.log("👨‍🎤 -> method:", method);
-  console.log("👨‍🎤 -> time:", time);
-
-  next();
-};
-
-app.get("/", logger, (req, res) => {
+app.get("/", (req, res) => {
   res.send("Home");
+});
+
+app.get("/about", (req, res) => {
+  res.send("About");
+});
+
+app.get("/api/items", (req, res) => {
+  console.log("👨‍🎤 -> req.user:", req.user);
+  res.send("Items");
 });
 
 app.listen(PORT, () => {
