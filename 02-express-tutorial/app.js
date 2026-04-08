@@ -1,6 +1,6 @@
 import express from "express";
-import logger from "./logger.js";
-import authorize from "./authorize.js";
+import morgan from "morgan";
+import { people } from "./data.js";
 
 // import path, { dirname } from "node:path";
 // import { fileURLToPath } from "node:url";
@@ -10,21 +10,23 @@ import authorize from "./authorize.js";
 const app = express();
 const PORT = 5000;
 
-app.use([logger, authorize]);
+app.use(morgan("dev"));
+app.use(express.static("./methods-public"));
+app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("Home");
+app.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people });
 });
 
-app.get("/about", (req, res) => {
-  res.send("About");
-});
+app.post("/login", (req, res) => {
+  const { name } = req.body;
+  if (name) {
+    return res.status(200).send(`Welcome ${name}`);
+  }
 
-app.get("/api/items", (req, res) => {
-  console.log("👨‍🎤 -> req.user:", req.user);
-  res.send("Items");
+  res.status(401).send("Please provide credentials");
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
