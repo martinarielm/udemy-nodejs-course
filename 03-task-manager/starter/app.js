@@ -1,1 +1,19 @@
-console.log('Task Manager App')
+import expresss from "express";
+import morgan from "morgan";
+import tasksRouter from "./routes/tasks.js";
+
+const PORT = 3000;
+const app = expresss();
+
+app.use(morgan("dev"));
+app.use(expresss.json());
+
+app.get("/hello", (req, res) => {
+  res.send("Task Manager app");
+});
+
+app.use("/api/v1/tasks", tasksRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
