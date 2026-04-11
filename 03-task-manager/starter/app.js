@@ -1,6 +1,7 @@
 import expresss from "express";
 import morgan from "morgan";
 import tasksRouter from "./routes/tasks.js";
+import connectToDatabase from "./db/connect.js";
 
 const PORT = 3000;
 const app = expresss();
@@ -14,6 +15,12 @@ app.get("/hello", (req, res) => {
 
 app.use("/api/v1/tasks", tasksRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+const startServer = async () => {
+  await connectToDatabase();
+
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+};
+
+startServer();
