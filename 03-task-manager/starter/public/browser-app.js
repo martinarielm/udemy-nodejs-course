@@ -18,7 +18,6 @@ const showTasks = async () => {
 
     const allTasks = tasks
       .map((task) => {
-        console.log("👨‍🎤 -> showTasks -> task:", task);
         const { completed, _id: taskID, name } = task;
         return `<div class="single-task ${completed && "task-completed"}">
           <h5><span><i class="far fa-check-circle"></i></span>${name}</h5>
@@ -55,7 +54,7 @@ tasksDOM.addEventListener("click", async (e) => {
       await axios.delete(`/api/v1/tasks/${id}`);
       showTasks();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
   loadingDOM.style.visibility = "hidden";
