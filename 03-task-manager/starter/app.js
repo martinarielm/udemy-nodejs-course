@@ -2,6 +2,7 @@ import expresss from "express";
 import morgan from "morgan";
 import tasksRouter from "./routes/tasks.js";
 import connectToDatabase from "./db/connect.js";
+import notFound from "./middleware/not-found.js";
 
 const PORT = 3000;
 const app = expresss();
@@ -9,7 +10,10 @@ const app = expresss();
 app.use(morgan("dev"));
 app.use(expresss.static("./public"));
 app.use(expresss.json());
+
 app.use("/api/v1/tasks", tasksRouter);
+
+app.use(notFound);
 
 const startServer = async () => {
   await connectToDatabase();
