@@ -14,8 +14,8 @@ app.use(expresss.json());
 
 app.use("/api/v1/tasks", tasksRouter);
 
-app.use(notFound);
 app.use(errorHandler);
+app.use(notFound);
 
 const startServer = async () => {
   await connectToDatabase();
