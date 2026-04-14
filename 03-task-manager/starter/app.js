@@ -7,12 +7,8 @@ const PORT = 3000;
 const app = expresss();
 
 app.use(morgan("dev"));
+app.use(expresss.static("./public"));
 app.use(expresss.json());
-
-app.get("/hello", (req, res) => {
-  res.send("Task Manager app");
-});
-
 app.use("/api/v1/tasks", tasksRouter);
 
 const startServer = async () => {
