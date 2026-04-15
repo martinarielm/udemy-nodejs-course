@@ -1,5 +1,6 @@
 import Task from "../models/Tasks.js";
 import asyncWrapper from "../middleware/async.js";
+import { createAPIError } from "../errors/custom-error.js";
 
 const getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.find({});
@@ -11,12 +12,10 @@ const createTask = asyncWrapper(async (req, res) => {
   res.status(201).json(task);
 });
 
-const getTask = asyncWrapper(async (req, res) => {
+const getTask = asyncWrapper(async (req, res, next) => {
   const task = await Task.findById({ _id: req.params.id });
   if (!task) {
-    return res
-      .status(404)
-      .json({ error: `Task with ID ${req.params.id} not found` });
+    return next(createAPIError(`Task with ID ${req.params.id} not found`, 404));
   }
   res.status(200).json(task);
 });
@@ -25,9 +24,7 @@ const deleteTask = asyncWrapper(async (req, res) => {
   const task = await Task.findByIdAndDelete({ _id: req.params.id });
 
   if (!task) {
-    return res
-      .status(404)
-      .json({ error: `Task with ID ${req.params.id} not found` });
+    return next(createAPIError(`Task with ID ${req.params.id} not found`, 404));
   }
   res.status(200).json(task);
 });
@@ -39,9 +36,7 @@ const updateTask = asyncWrapper(async (req, res) => {
   });
 
   if (!task) {
-    return res
-      .status(404)
-      .json({ error: `Task with ID ${req.params.id} not found` });
+    return next(createAPIError(`Task with ID ${req.params.id} not found`, 404));
   }
   res.status(200).json(task);
 });
