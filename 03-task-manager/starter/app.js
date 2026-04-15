@@ -5,7 +5,7 @@ import connectToDatabase from "./db/connect.js";
 import notFound from "./middleware/not-found.js";
 import errorHandler from "./middleware/error-handler.js";
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = expresss();
 
 app.use(morgan("dev"));
