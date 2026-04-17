@@ -5,6 +5,7 @@ import notFoundHandler from "./middleware/not-found.js";
 import errorHandler from "./middleware/error-handler.js";
 import connectToDatabase from "./db/connect.js";
 import productsRouter from "./routes/products.js";
+import "express-async-errors";
 
 const app = expresss();
 const PORT = process.env.PORT || 5000;
