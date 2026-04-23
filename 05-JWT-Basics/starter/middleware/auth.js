@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import CustomAPIError from "../errors/custom-error.js";
 import UnauthenticatedError from "../errors/unauthenticated.js";
 
 export default async function auth(req, res, next) {
