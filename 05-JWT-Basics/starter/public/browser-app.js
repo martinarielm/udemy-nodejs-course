@@ -43,7 +43,7 @@ formDOM.addEventListener("submit", async (e) => {
 
 btnDOM.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
-  console.log("👨‍🎤 -> token:", token);
+
   try {
     const { data } = await axios.get("/api/v1/dashboard", {
       headers: {

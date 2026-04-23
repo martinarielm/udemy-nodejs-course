@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import CustomAPIError from "../errors/custom-error.js";
+import UnauthenticatedError from "../errors/unauthenticated.js";
 
 export default async function auth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
-    throw new CustomAPIError("No token provided", 401);
+    throw new UnauthenticatedError("No token provided");
   }
 
   const token = authHeader.split(" ")[1];
@@ -15,8 +16,8 @@ export default async function auth(req, res, next) {
     const { id, username } = decoded;
 
     req.user = { id, username };
-  } catch (error) {
-    throw new CustomAPIError(error.message, 401);
+  } catch {
+    throw new UnauthenticatedError("Not authorized to access this route");
   }
 
   next();
