@@ -1,20 +1,7 @@
 const mongoose = require("mongoose");
 
-// const connectDB = (url) => {
-//   return mongoose.connect(url, {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false,
-//     useUnifiedTopology: true,
-//   });
-// };
-
 const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
-  // useNewUrlParser: true,
-  // useCreateIndex: true,
-  // useFindAndModify: false,
-  // useUnifiedTopology: true,
 };
 
 const mongoUri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URI}`;
