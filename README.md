@@ -12,8 +12,13 @@ El proyecto está dividido en las siguientes secciones, cada una con carpetas `s
 - **04-store-api**: API de tienda con productos, filtros y paginación.
 - **05-JWT-Basics**: Implementación básica de autenticación con JSON Web Tokens (JWT).
 - **06-jobs-api**: API para gestión de empleos, incluyendo autenticación y autorización.
+- **06.5-jobster-api**: Extensión full-stack de Jobs API con el cliente React de Jobster.
 
 Cada módulo incluye archivos como `app.js`, `package.json` y carpetas para controladores, rutas, middleware y modelos.
+
+## Trabajar con IA
+
+Codex carga automáticamente las instrucciones de contexto del repositorio desde `AGENTS.md`.
 
 ## Licencia
 
