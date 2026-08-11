@@ -1,7 +1,11 @@
+const dns = require("node:dns");
 const mongoose = require("mongoose");
 
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
 const clientOptions = {
-  serverApi: { version: "1", strict: true, deprecationErrors: true },
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
 
 const mongoUri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_URI}`;
