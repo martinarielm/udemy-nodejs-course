@@ -3,8 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllJobs = async (req, res) => {
-  const { search, status, jobType, sort } = req.query;
-  console.log("👨‍🎤 -> getAllJobs -> sort:", sort);
+  const { search, status, jobType, sort, page, limit } = req.query;
   const queryObject = {
     createdBy: req.user.userId,
   };
@@ -32,11 +31,20 @@ const getAllJobs = async (req, res) => {
     sortOrder = "-position";
   }
 
-  let result = Job.find(queryObject).sort(sortOrder);
-  console.log("👨‍🎤 -> getAllJobs -> sortOrder:", sortOrder);
+  const pageNumber = Number(page) || 1;
+  const jobLimit = Number(limit) || 10;
+  const skipJobs = (pageNumber - 1) * jobLimit;
+
+  const result = Job.find(queryObject)
+    .sort(sortOrder)
+    .skip(skipJobs)
+    .limit(jobLimit);
 
   const jobs = await result;
-  res.status(StatusCodes.OK).json({ jobs });
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / jobLimit);
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 
 const getJob = async (req, res) => {
